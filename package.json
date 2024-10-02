@@ -1,0 +1,19 @@
+{
+  "name": "apirestconsume",
+  "version": "1.0.0",
+  "description": "Api rest consume with javascript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kevurb/ApiRestConsume.git"
+  },
+  "author": "@kevinurbina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kevurb/ApiRestConsume/issues"
+  },
+  "homepage": "https://github.com/kevurb/ApiRestConsume#readme"
+}
