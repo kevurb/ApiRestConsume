@@ -35,8 +35,16 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Run my script
         run: |
-          echo "My API key is: ${{ secrets.API_KEY }}"
+          echo "My API key is: ${{ secrets.API_KEY_GITHUB }}"
           # Utiliza la clave en tu script
+          - name: Build and deploy
+        id: deployment
+        uses: actions/deploy@v1
+        with:
+          provider: pages
+          folder: build # Cambia esto si tu build genera archivos en una carpeta diferente
+          # Aquí es donde accedes a la variable secreta:
+          github_token: ${{ secrets.API_KEY_GIT_HUB }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -45,3 +53,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+         
