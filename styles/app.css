@@ -45,11 +45,12 @@ h1, h2, h3 {
 }
 
 h1, h2 {
+  margin-top: 40px;
   font-size: 24px;
   color: var(--purple-dark-2);
   font-family: var(--font-family-titles);
   font-weight: var(--font-weight-title1);
-  margin: 0;
+  
   padding: 0;
 }
 
@@ -143,16 +144,26 @@ button {
 
 .header-arrow {
   font-weight: var(--font-weight-text2);
-  font-size: 36px;
+  font-size: 30px;
   margin-bottom: 16px;
   cursor: pointer;
   display: inline-block;
+  border-radius: 40px;
+  background-color: gray;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  position: fixed;
+  background-blend-mode: multiply;
+  opacity: 0.9;
+   z-index: 1;
 }
 .header-arrow--white {
   color: var(--purple-light-1);
 }
 
 .header-searchForm {
+  margin-top: 70px;
   display: flex;
   align-items: center;
   justify-content: center;
