@@ -1,0 +1,8 @@
+{
+"projectId":"prj_HptkP7AvoBp7LdHqcEpaYFIfmUsc",
+"orgId":"team_L43qWAmd5MTYIfLS2w1IaioY",
+"builds":{
+    "src": "build/server.js",
+    "use": "@vercel/node"
+}
+}
