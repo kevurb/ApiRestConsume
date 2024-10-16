@@ -130,3 +130,4 @@ dist
 .pnp.*
 # secrets keys (API KEYS)
 src/keys.js
+.vercel
