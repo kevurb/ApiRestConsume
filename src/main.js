@@ -1,11 +1,11 @@
-
+API_KEY1 =  process.env.API_KEY;
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {
       'Content-Type' : 'application/json;charset=utf-8'
   },
   params: {
-    'api_key': API_KEY,
+    'api_key': API_KEY1,
   }
 })
 const API_URL_TRENDING = '/trending/movie/week'
