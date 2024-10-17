@@ -1,5 +1,4 @@
 
-console.log(API_KEY)
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {
@@ -63,7 +62,7 @@ function createGenres (genres, container){
 }
 async function getTrendingMoviesPreview() {
     const {status, data}= await api(API_URL_TRENDING);
-    ////console.log.log(data)
+    //console.log(status,data)
     const movies = data.results;
     printMovies(movies, trendingMoviesPreviewList)
    
@@ -92,7 +91,10 @@ async function getMoviesByName(query) {
     params: {
       query : query
     }
-  })
+  }
+  
+);
+  console.log('BUSCAR',status,data)
   ////console.log.log(status,data)
   printMovies(data.results,genericSection)
 }

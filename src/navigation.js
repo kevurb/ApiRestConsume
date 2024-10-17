@@ -1,6 +1,7 @@
 searchFormBtn.addEventListener('click', ()=>{
     
-    location.hash='#search='+searchFormInput.value;
+    location.hash=`#search=${searchFormInput.value}`;
+    console.log(location.hash,searchFormInput.value)
     
 })
 trendingBtn.addEventListener('click', ()=>{
@@ -98,7 +99,7 @@ function searchPage(){
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
-    ////console.log.log(searchFormInput.value);
+    console.log('VALOR',searchFormInput.value);
     
     getMoviesByName(searchFormInput.value)
 }
