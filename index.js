@@ -3,7 +3,8 @@
 // import express from 'express'
 // import {join, dirname} from 'path'
 // import { fileURLToPath } from 'url';
-import dotenv from 'dotenv'
+module.exports = {};
+import dotenv from '/dotenv'
 dotenv.config()
 const API_KEY = process.env.API_KEY
 console.log(API_KEY)

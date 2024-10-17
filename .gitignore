@@ -131,3 +131,4 @@ dist
 # secrets keys (API KEYS)
 src/keys.js
 .vercel
+.env*.local
