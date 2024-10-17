@@ -2,7 +2,7 @@
   "name": "apirestconsume",
   "version": "1.0.0",
   "description": "Api rest consume with javascript",
-  "main": "index.js",
+  "main": "main.js",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

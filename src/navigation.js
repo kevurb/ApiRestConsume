@@ -13,7 +13,7 @@ arrowBtn.addEventListener('click',()=>{
 window.addEventListener('DOMContentLoaded', navigator, false)
 window.addEventListener('hashchange', navigator, false)
 function navigator(){
-    console.log({location});
+    ////console.log.log({location});
     
     if (location.hash.startsWith('#trends')){
         trendsPage()
@@ -32,7 +32,7 @@ function navigator(){
     document.body.scrollTop = 0;
 }
 function homePage(){
-    console.log('HOMEEEEE');
+    //console.log.log('HOMEEEEE');
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.add('inactive');
@@ -47,7 +47,7 @@ function homePage(){
     getGenresPreview()
 }
 function categoriesPage(){
-    console.log('categories');
+    //console.log.log('categories');
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -61,13 +61,13 @@ function categoriesPage(){
     movieDetailSection.classList.add('inactive')
     const [_,categoryData] = location.hash.split('=')
     const [genreId,genreName] = categoryData.split('-')
-    //console.log(genreId);
+    ////console.log.log(genreId);
     
     getMoviesByGenre(genreId, genreName);
     headerCategoryTitle.innerHTML = decodeURI(genreName)
 }
 function movieDatailsPage(){
-    console.log('movieDetails');
+    //console.log.log('movieDetails');
     headerSection.classList.add('header-container--long');
    // headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -85,7 +85,7 @@ function movieDatailsPage(){
     
 }
 function searchPage(){
-    console.log('search');
+    //console.log.log('search');
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');
@@ -98,13 +98,13 @@ function searchPage(){
     categoriesPreviewSection.classList.add('inactive')
     genericSection.classList.remove('inactive')
     movieDetailSection.classList.add('inactive')
-    //console.log(searchFormInput.value);
+    ////console.log.log(searchFormInput.value);
     
     getMoviesByName(searchFormInput.value)
 }
 
 function trendsPage(){
-    console.log('TREDS');
+    //console.log.log('TREDS');
     headerSection.classList.remove('header-container--long');
     headerSection.style.background = '';
     arrowBtn.classList.remove('inactive');

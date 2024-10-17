@@ -1,4 +1,5 @@
 
+console.log(API_KEY)
 const api = axios.create({
   baseURL: 'https://api.themoviedb.org/3',
   headers: {
@@ -37,7 +38,7 @@ function printMovies(movies, container) {
 }
 function createGenres (genres, container){
   container.innerHTML= "";
-    // console.log(genres)
+    // //console.log.log(genres)
     genres.forEach(genre => {
        
       
@@ -51,7 +52,7 @@ function createGenres (genres, container){
          location.hash= `#category=${genre.id}-${genre.name}`
          
       })
-      // console.log(genre.id,genre.name);
+      // //console.log.log(genre.id,genre.name);
       
       const genreTitleText = document.createTextNode(genre.name);
       genreTitle.appendChild(genreTitleText)
@@ -60,19 +61,14 @@ function createGenres (genres, container){
       
     });
 }
-
-
-
 async function getTrendingMoviesPreview() {
     const {status, data}= await api(API_URL_TRENDING);
-    //console.log(data)
+    ////console.log.log(data)
     const movies = data.results;
     printMovies(movies, trendingMoviesPreviewList)
    
   }
-
-
-  async function getGenresPreview() {
+async function getGenresPreview() {
     const {status,data} = await api(API_URL_GENRES);
     const genres = data.genres;
     createGenres(genres, categoriesPreviewList)
@@ -86,9 +82,9 @@ async function getMoviesByGenre(id) {
       with_genres : id
     }
   })
-  console.log(status, data)
+  //console.log.log(status, data)
   const moviesResults = data.results
-  console.log(moviesResults)
+  //console.log.log(moviesResults)
   printMovies(moviesResults,genericSection)
 }
 async function getMoviesByName(query) {
@@ -97,31 +93,31 @@ async function getMoviesByName(query) {
       query : query
     }
   })
-  //console.log(status,data)
+  ////console.log.log(status,data)
   printMovies(data.results,genericSection)
 }
 async function getTrends() {
   const {status, data} =  await api (API_URL_TRENDING)
   const movies = data.results
-  console.log(status,data)
+  //console.log.log(status,data)
   headerCategoryTitle.innerHTML='Tendencias'
   printMovies(movies, genericSection)
 }
 async function getMovieById(id) {
   const {status, data:movie} = await api(API_URL_MOVIEDETAILS + id)
 
-  console.log(status,movie)
+  //console.log.log(status,movie)
   const movieImgUrl = 'https://image.tmdb.org/t/p/w500'+movie.poster_path
   headerSection.style.background = `url(${movieImgUrl})`
   movieDetailTitle.textContent = movie.title
   movieDetailDescription.textContent = movie.overview
   movieDetailScore.textContent = movie.vote_average
-  console.log(movie.genres)
+  //console.log.log(movie.genres)
   createGenres(movie.genres, movieDetailCategoriesList)
   getRelatedmMoviesById(id)
 }
 async function getRelatedmMoviesById(id) {
   const {status, data} = await api(API_URL_MOVIEDETAILS + id + '/recommendations')
-  console.log(status,data)
+  //console.log.log(status,data)
   printMovies(data.results, relatedMoviesContainer)
 }
