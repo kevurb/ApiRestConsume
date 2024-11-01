@@ -37,6 +37,15 @@ function printMovies(movies, container, lazyLoad = false) {
       lazyLoader ? "data-img" : "src",
       "https://image.tmdb.org/t/p/w300" + movie.poster_path
     );
+    movieImg.addEventListener("error", () => {
+      movieImg.setAttribute("src", "src/images/noload.jpg");
+      const movieNameContainer = document.createElement("span");
+      const movieNameText = document.createTextNode(
+        `${movieImg.getAttribute("alt")}`
+      );
+      movieContainer.appendChild(movieNameContainer);
+      movieNameContainer.appendChild(movieNameText);
+    });
     if (lazyLoad) {
       lazyLoader.observe(movieImg);
     }
@@ -91,13 +100,13 @@ async function getMoviesByGenre(id) {
   printMovies(moviesResults, genericSection, true);
 }
 async function getMoviesByName(query) {
-  console.log("get in ", query);
+  //console.log("get in ", query);
   const { status, data } = await api(API_URL_NAMESEARCH, {
     params: {
       query: query,
     },
   });
-  console.log("B", { status }, data.results);
+  //console.log("B", { status }, data.results);
   ////console.log.log(status,data)
   printMovies(data.results, genericSection, true);
 }
@@ -110,7 +119,6 @@ async function getTrends() {
 }
 async function getMovieById(id) {
   const { status, data: movie } = await api(API_URL_MOVIEDETAILS + id);
-
   //console.log.log(status,movie)
   const movieImgUrl = "https://image.tmdb.org/t/p/w500" + movie.poster_path;
   headerSection.style.background = `url(${movieImgUrl})`;

@@ -1,6 +1,6 @@
 searchFormBtn.addEventListener("click", () => {
   location.hash = `#search=${searchFormInput.value}`;
-  console.log("heyy", location.hash, searchFormInput.value);
+  //console.log("heyy", location.hash, searchFormInput.value);
 });
 trendingBtn.addEventListener("click", () => {
   location.hash = "#trends";
