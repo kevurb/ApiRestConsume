@@ -7,7 +7,7 @@ const api = axios.create({
     api_key: API_KEY,
   },
 });
-const API_URL_TRENDING = "/trending/movie/week";
+const API_URL_TRENDING = "/trending/movie/day";
 const API_URL_GENRES = "/genre/movie/list";
 const API_URL_GENRESEARCH = "/discover/movie";
 const API_URL_NAMESEARCH = "/search/movie";
@@ -22,8 +22,14 @@ const lazyLoader = new IntersectionObserver((entries) => {
     }
   });
 });
-function printMovies(movies, container, lazyLoad = false) {
-  container.innerHTML = "";
+function printMovies(
+  movies,
+  container,
+  { lazyLoad = false, clean = true } = {}
+) {
+  if (clean) {
+    container.innerHTML = "";
+  }
   movies.forEach((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
@@ -78,7 +84,10 @@ async function getTrendingMoviesPreview() {
   const { status, data } = await api(API_URL_TRENDING);
   //console.log(status,data)
   const movies = data.results;
-  printMovies(movies, trendingMoviesPreviewList, true);
+  printMovies(movies, trendingMoviesPreviewList, {
+    lazyLoad: true,
+    clean: false,
+  });
 }
 async function getGenresPreview() {
   const { status, data } = await api(API_URL_GENRES);
@@ -97,7 +106,7 @@ async function getMoviesByGenre(id) {
   //console.log.log(status, data)
   const moviesResults = data.results;
   //console.log.log(moviesResults)
-  printMovies(moviesResults, genericSection, true);
+  printMovies(moviesResults, genericSection, { lazyLoad: true, clean: true });
 }
 async function getMoviesByName(query) {
   //console.log("get in ", query);
@@ -115,7 +124,26 @@ async function getTrends() {
   const movies = data.results;
   //console.log.log(status,data)
   headerCategoryTitle.innerHTML = "Tendencias";
-  printMovies(movies, genericSection, true);
+  printMovies(movies, genericSection, { lazyLoad: true, clean: true });
+  const btnLoadMore = document.createElement("button");
+  btnLoadMore.innerText = "Cargar Mas";
+  btnLoadMore.addEventListener("click", getPaginatedTrends);
+  genericSection.appendChild(btnLoadMore);
+}
+let page = 1;
+async function getPaginatedTrends() {
+  page++;
+  const { status, data } = await api(API_URL_TRENDING, {
+    params: {
+      page: page,
+    },
+  });
+  const movies = data.results;
+  printMovies(movies, genericSection, { lazyLoad: true, clean: false });
+  const btnLoadMore = document.createElement("button");
+  btnLoadMore.innerText = "Cargar Mas";
+  btnLoadMore.addEventListener("click", getPaginatedTrends);
+  genericSection.appendChild(btnLoadMore);
 }
 async function getMovieById(id) {
   const { status, data: movie } = await api(API_URL_MOVIEDETAILS + id);
