@@ -117,7 +117,7 @@ async function getMoviesByName(query) {
   });
   //console.log("B", { status }, data.results);
   ////console.log.log(status,data)
-  printMovies(data.results, genericSection, true);
+  printMovies(data.results, genericSection, { lazyLoad: true, clean: true });
 }
 async function getTrends() {
   const { status, data } = await api(API_URL_TRENDING);
@@ -162,5 +162,8 @@ async function getRelatedmMoviesById(id) {
     API_URL_MOVIEDETAILS + id + "/recommendations"
   );
   //console.log.log(status,data)
-  printMovies(data.results, relatedMoviesContainer, true);
+  printMovies(data.results, relatedMoviesContainer, {
+    lazyLoad: true,
+    clean: true,
+  });
 }
