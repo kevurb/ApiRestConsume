@@ -108,6 +108,22 @@ async function getMoviesByGenre(id) {
   //console.log.log(moviesResults)
   printMovies(moviesResults, genericSection, { lazyLoad: true, clean: true });
 }
+async function getPaginatedMoviesByGenre(id) {
+  const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  const scrollIsBotton = scrollTop + clientHeight >= scrollHeight - 15;
+  if (scrollIsBotton) {
+    page++;
+    const { status, data } = await api(API_URL_GENRESEARCH, {
+      params: {
+        with_genres: id,
+        page: page,
+      },
+    });
+    const movies = data.results;
+    console.log({ data });
+    printMovies(movies, genericSection, { lazyLoad: true, clean: false });
+  }
+}
 async function getMoviesByName(query) {
   //console.log("get in ", query);
   const { status, data } = await api(API_URL_NAMESEARCH, {
@@ -122,28 +138,33 @@ async function getMoviesByName(query) {
 async function getTrends() {
   const { status, data } = await api(API_URL_TRENDING);
   const movies = data.results;
+  maxPage = data.total_pages;
   //console.log.log(status,data)
   headerCategoryTitle.innerHTML = "Tendencias";
   printMovies(movies, genericSection, { lazyLoad: true, clean: true });
-  const btnLoadMore = document.createElement("button");
-  btnLoadMore.innerText = "Cargar Mas";
-  btnLoadMore.addEventListener("click", getPaginatedTrends);
-  genericSection.appendChild(btnLoadMore);
+  // const btnLoadMore = document.createElement("button");
+  // btnLoadMore.innerText = "Cargar Mas";
+  // btnLoadMore.addEventListener("click", getPaginatedTrends);
+  // genericSection.appendChild(btnLoadMore);
 }
-let page = 1;
 async function getPaginatedTrends() {
-  page++;
-  const { status, data } = await api(API_URL_TRENDING, {
-    params: {
-      page: page,
-    },
-  });
-  const movies = data.results;
-  printMovies(movies, genericSection, { lazyLoad: true, clean: false });
-  const btnLoadMore = document.createElement("button");
-  btnLoadMore.innerText = "Cargar Mas";
-  btnLoadMore.addEventListener("click", getPaginatedTrends);
-  genericSection.appendChild(btnLoadMore);
+  const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+  const scrollIsBotton = scrollTop + clientHeight >= scrollHeight - 15;
+  const pageIsNotMax = page < maxPage;
+  if (scrollIsBotton && pageIsNotMax) {
+    page++;
+    const { status, data } = await api(API_URL_TRENDING, {
+      params: {
+        page: page,
+      },
+    });
+    const movies = data.results;
+    printMovies(movies, genericSection, { lazyLoad: true, clean: false });
+  }
+  // const btnLoadMore = document.createElement("button");
+  // btnLoadMore.innerText = "Cargar Mas";
+  // btnLoadMore.addEventListener("click", getPaginatedTrends);
+  // genericSection.appendChild(btnLoadMore);
 }
 async function getMovieById(id) {
   const { status, data: movie } = await api(API_URL_MOVIEDETAILS + id);
