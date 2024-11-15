@@ -106,12 +106,14 @@ async function getMoviesByGenre(id) {
   //console.log.log(status, data)
   const moviesResults = data.results;
   //console.log.log(moviesResults)
+  maxPage = data.total_pages;
   printMovies(moviesResults, genericSection, { lazyLoad: true, clean: true });
 }
 async function getPaginatedMoviesByGenre(id) {
   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
   const scrollIsBotton = scrollTop + clientHeight >= scrollHeight - 15;
-  if (scrollIsBotton) {
+  const pageIsNotMax = page < maxPage;
+  if (scrollIsBotton && pageIsNotMax) {
     page++;
     const { status, data } = await api(API_URL_GENRESEARCH, {
       params: {
@@ -133,7 +135,30 @@ async function getMoviesByName(query) {
   });
   //console.log("B", { status }, data.results);
   ////console.log.log(status,data)
+  maxPage = data.total_pages;
+  console.log(maxPage);
+  const pageIsNotMax = page < maxPage;
   printMovies(data.results, genericSection, { lazyLoad: true, clean: true });
+}
+function getPaginatedMoviesByName(query) {
+  return async function () {
+    const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+    const scrollIsBotton = scrollTop + clientHeight >= scrollHeight - 15;
+    const pageIsNotMax = page < maxPage;
+    console.log(scrollIsBotton, pageIsNotMax);
+
+    if (scrollIsBotton && pageIsNotMax) {
+      page++;
+      const { status, data } = await api(API_URL_NAMESEARCH, {
+        params: {
+          query: query,
+          page,
+        },
+      });
+      const movies = data.results;
+      printMovies(movies, genericSection, { lazyLoad: true, clean: false });
+    }
+  };
 }
 async function getTrends() {
   const { status, data } = await api(API_URL_TRENDING);
@@ -151,6 +176,8 @@ async function getPaginatedTrends() {
   const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
   const scrollIsBotton = scrollTop + clientHeight >= scrollHeight - 15;
   const pageIsNotMax = page < maxPage;
+  console.log(pageIsNotMax);
+
   if (scrollIsBotton && pageIsNotMax) {
     page++;
     const { status, data } = await api(API_URL_TRENDING, {

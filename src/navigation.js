@@ -1,3 +1,4 @@
+let maxPage;
 let page = 1;
 let infiteScroll;
 searchFormBtn.addEventListener("click", () => {
@@ -106,6 +107,7 @@ function searchPage() {
   const [_, name_Id] = location.hash.split("=");
 
   getMoviesByName(name_Id);
+  infiteScroll = getPaginatedMoviesByName(name_Id);
 }
 function trendsPage() {
   //console.log.log('TREDS');
