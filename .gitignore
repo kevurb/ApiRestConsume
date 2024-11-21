@@ -129,6 +129,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 # secrets keys (API KEYS)
-src/keys.js
+#src/keys.js
 .vercel
 .env*.local
