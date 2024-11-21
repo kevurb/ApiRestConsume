@@ -12,7 +12,23 @@ const API_URL_GENRES = "/genre/movie/list";
 const API_URL_GENRESEARCH = "/discover/movie";
 const API_URL_NAMESEARCH = "/search/movie";
 const API_URL_MOVIEDETAILS = "/movie/";
-
+async function likeMovie(movie) {
+  console.log(movie);
+  const account_id = 21541655;
+  const { status, data } = await api.post(
+    `/account/${account_id}/favorite`,
+    {
+      media_type: "movie",
+      media_id: movie.id,
+      favorite: true,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${API_TOKEN}`,
+      },
+    }
+  );
+}
 const lazyLoader = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -33,9 +49,6 @@ function printMovies(
   movies.forEach((movie) => {
     const movieContainer = document.createElement("div");
     movieContainer.classList.add("movie-container");
-    movieContainer.addEventListener("click", () => {
-      location.hash = `movie=${movie.id}`;
-    });
     const movieImg = document.createElement("img");
     movieImg.classList.add("movie-img");
     movieImg.setAttribute("alt", movie.title);
@@ -43,6 +56,9 @@ function printMovies(
       lazyLoader ? "data-img" : "src",
       "https://image.tmdb.org/t/p/w300" + movie.poster_path
     );
+    movieImg.addEventListener("click", () => {
+      location.hash = `movie=${movie.id}`;
+    });
     movieImg.addEventListener("error", () => {
       movieImg.setAttribute("src", "src/images/noload.jpg");
       const movieNameContainer = document.createElement("span");
@@ -52,6 +68,13 @@ function printMovies(
       movieContainer.appendChild(movieNameContainer);
       movieNameContainer.appendChild(movieNameText);
     });
+    const btnLiked = document.createElement("button");
+    btnLiked.classList.add("movie-btn");
+    btnLiked.addEventListener("click", () => {
+      btnLiked.classList.toggle("movie-btn--liked");
+      likeMovie(movie);
+    });
+    movieContainer.appendChild(btnLiked);
     if (lazyLoad) {
       lazyLoader.observe(movieImg);
     }
@@ -137,7 +160,7 @@ async function getMoviesByName(query) {
   ////console.log.log(status,data)
   maxPage = data.total_pages;
   console.log(maxPage);
-  const pageIsNotMax = page < maxPage;
+  pageIsNotMax = page < maxPage;
   printMovies(data.results, genericSection, { lazyLoad: true, clean: true });
 }
 function getPaginatedMoviesByName(query) {
