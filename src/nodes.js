@@ -9,6 +9,12 @@ const movieDetailSection = document.querySelector("#movieDetail");
 const trendingMoviesPreviewList = document.querySelector(
   ".trendingPreview-movieList"
 );
+const favoriteMoviesList = document.querySelector(
+  ".favoritesPreview-movieList"
+);
+const favoriteMovieContainer = document.querySelector(
+  ".favoritesPreview-container"
+);
 const categoriesPreviewList = document.querySelector(".categoriesPreview-list");
 const movieDetailCategoriesList = document.querySelector(
   "#movieDetail .categories-list"

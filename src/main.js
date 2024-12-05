@@ -2,6 +2,7 @@ const api = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   headers: {
     "Content-Type": "application/json;charset=utf-8",
+    Authorization: `Bearer ${API_TOKEN}`,
   },
   params: {
     api_key: API_KEY,
@@ -29,6 +30,7 @@ async function likeMovie(movie) {
     }
   );
 }
+
 const lazyLoader = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
@@ -234,6 +236,15 @@ async function getRelatedmMoviesById(id) {
   );
   //console.log.log(status,data)
   printMovies(data.results, relatedMoviesContainer, {
+    lazyLoad: true,
+    clean: true,
+  });
+}
+async function getFavorites() {
+  const account_id = 645757;
+  const { status, data } = await api(`/account/${account_id}/favorite/movies`);
+  console.log(data);
+  printMovies(data.results, favoriteMoviesList, {
     lazyLoad: true,
     clean: true,
   });
