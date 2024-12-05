@@ -87,6 +87,7 @@ function movieDatailsPage() {
   headerCategoryTitle.classList.add("inactive");
   searchForm.classList.add("inactive");
 
+  favoriteMovieContainer.classList.add("inactive");
   trendingPreviewSection.classList.add("inactive");
   categoriesPreviewSection.classList.add("inactive");
   genericSection.classList.add("inactive");
